@@ -1,0 +1,53 @@
+name: Build and Test Code
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    enviroment:
+      name: testing
+    env:
+      SECRET_KEY: ${{secrets.SECRET_KEY}}
+      ALGORITHM: ${{secrets.ALGORITHM}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+      DATABASE_CREDENTIALS: ${{secrets.DATABASE_CREDENTIALS}}
+      DATABASE_TEST_CREDENTIALS: ${{secrets.DATABASE_TEST_CREDENTIALS}}
+      INCORRECT_SECRET_KEY: ${{secrets.INCORRECT_SECRET_KEY}}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+          POSTGRES_DB: ${{secrets.TEST_DATABASE_NAME}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: pulling git repo
+        uses: actions/checkout@v2
+
+      - name: Install Python version 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.2"
+        #   cache: 'pip'
+        # run: pip install -r requirements.txt
+
+      - name: update pip
+        run: python -m pip install --upgrade pip
+
+      - name: install all dependencies
+        run: pip install -r requirements.txt
+
+      - name: test with pytest
+        run: |
+          pip install pytest
+          pytest
