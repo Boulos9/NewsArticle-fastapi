@@ -47,7 +47,7 @@ jobs:
       - name: install all dependencies
         run: |
           pip install -r requirements.txt
-          python -m nltk.downloader stopwords
+          python -m nltk.downloader all
 
       - name: test with pytest
         run: |
