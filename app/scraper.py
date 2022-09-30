@@ -19,7 +19,7 @@ class Scraper():
 				{
 				#"title_selector": ".text__text__1FZLe.text__dark-grey__3Ml43.text__medium__1kbOh.text__heading_2__1K_hh.heading__base__2T28j.heading__heading_2__3Fcw5",
 				#"author_selector": "div.article-body__element__2p5pI span[data-testid='Text'].text__dark-grey__3Ml43",
-				"title_selector": "div.article-header__heading__15OpQ h1[data-testid='Heading']",
+				"title_selector": "div.article-header-v2__heading__3KoAG h1[data-testid='Heading']",
 				"author_selector": "a[href*='/authors']",
 				"text_selector": "p[data-testid*='paragraph']",
 				"subject_selector": "li a[data-testid='Button'] span[data-testid='Text']",
